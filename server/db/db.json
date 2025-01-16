@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "name": "John Doe"
+        "name": "John Loki"
     },
     {
         "id": 2,
@@ -13,6 +13,6 @@
     },
     {
         "id": 4,
-        "name": "Bob Brown"
+        "name": "Bob Lee"
     }
 ]

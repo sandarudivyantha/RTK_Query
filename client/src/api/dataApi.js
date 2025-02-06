@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const dataApi = createApi({
   reducerPath: "data-api-reducer",
+  tagTypes: ["Data"],
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/" }),
   endpoints: (builder) => ({
     getAllData: builder.query({
@@ -15,6 +16,7 @@ export const dataApi = createApi({
           err,
           arg,
         });
+        return [{ type: "Data" }];
       },
     }),
     postData: builder.mutation({

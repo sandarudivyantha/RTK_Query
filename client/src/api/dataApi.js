@@ -11,12 +11,18 @@ export const dataApi = createApi({
         method: "GET",
       }),
       providesTags: (result, err, arg) => {
-        console.log("getAllData providesTags", {
-          result,
-          err,
-          arg,
-        });
-        return [{ type: "Data" }];
+        return result
+          ? [...result.map((ele) => ({ type: "Data", id: ele._id }))]
+          : [{ type: "Data", id: "LIST" }];
+      },
+    }),
+    getDataById: builder.query({
+      query: (id, name) => ({
+        url: `/${id}`,
+        method: "get",
+      }),
+      providesTags: (result, err, arg) => {
+        return [{ type: "Data", id: arg }];
       },
     }),
     postData: builder.mutation({
@@ -29,5 +35,5 @@ export const dataApi = createApi({
   }),
 });
 
-export const { useGetAllDataQuery } = dataApi;
+export const { useGetAllDataQuery, useGetDataByIdQuery } = dataApi;
 export default dataApi;

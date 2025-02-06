@@ -27,4 +27,5 @@ export const dataApi = createApi({
   }),
 });
 
-export const { useGetDataQuery, usePostDataMutation } = dataApi;
+export const { useGetAllDataQuery } = dataApi;
+export default dataApi;

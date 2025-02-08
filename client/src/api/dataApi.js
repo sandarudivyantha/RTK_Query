@@ -24,7 +24,7 @@ export const dataApi = createApi({
     getDataById: builder.query({
       query: (id, name) => ({
         url: `/${id}`,
-        method: "get",
+        method: "GET",
       }),
       providesTags: (result, err, arg) => {
         console.log("Get data by id tag", result);
@@ -48,14 +48,23 @@ export const dataApi = createApi({
         method: "PUT",
         body: data.body,
       }),
-      invalidatesTags: (result, err, arg) => {
-        console.log("Update data by id invalid tags", { result, err, arg });
-        return [{ type: "Data",  id: arg.id }, { type: "Data", id: "LIST" }];
-      },
+      invalidatesTags: (result, err, arg) => [{ type: "Data", id: arg.id }, { type: "Data", id: "LIST" }],
+    }),
+    deleteDataById: builder.mutation({
+      query: (id) => ({
+        url: `/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, err, arg) => [{ type: "Data", id: arg },{ type: "Data", id: "LIST" }], 
     }),
   }),
 });
 
-export const { useGetAllDataQuery, useGetDataByIdQuery, useAddDataMutation, useUpdateDataByIdMutation } =
-  dataApi;
+export const {
+  useGetAllDataQuery,
+  useGetDataByIdQuery,
+  useAddDataMutation,
+  useUpdateDataByIdMutation,
+  useDeleteDataByIdMutation,
+} = dataApi;
 export default dataApi;

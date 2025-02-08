@@ -11,9 +11,14 @@ export const dataApi = createApi({
         method: "GET",
       }),
       providesTags: (result, err, arg) => {
-        return result
-          ? [...result.map((ele) => ({ type: "Data", id: ele._id }))]
+        const allTags = result
+          ? [
+              ...result.map((ele) => ({ type: "Data", id: ele._id })),
+              { type: "Data", id: "LIST" },
+            ]
           : [{ type: "Data", id: "LIST" }];
+        console.log("Get all data tags", allTags);
+        return allTags;
       },
     }),
     getDataById: builder.query({
@@ -22,6 +27,7 @@ export const dataApi = createApi({
         method: "get",
       }),
       providesTags: (result, err, arg) => {
+        console.log("Get data by id tag", { arg });
         return [{ type: "Data", id: arg }];
       },
     }),

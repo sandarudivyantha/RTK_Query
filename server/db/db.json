@@ -2,5 +2,7 @@
   { "id": 1, "name": "John Loki" },
   { "id": 2, "name": "Miya Smith" },
   { "id": 3, "name": "Alice Johnson" },
-  { "id": 4, "name": "Sam Lee" }
+  { "id": 4, "name": "Sam Lee" },
+  { "id": 5, "name": "Upul Kumara" },
+  { "id": 6, "name": "Upul Kumara" }
 ]

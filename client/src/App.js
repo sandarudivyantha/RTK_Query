@@ -1,6 +1,7 @@
 import React from "react";
 import {
   useAddDataMutation,
+  useDeleteDataByIdMutation,
   useGetAllDataQuery,
   useGetDataByIdQuery,
   useUpdateDataByIdMutation,
@@ -17,6 +18,7 @@ const App = () => {
 
   const [addData] = useAddDataMutation();
   const [updateData] = useUpdateDataByIdMutation();
+  const [deleteDataById] = useDeleteDataByIdMutation();
 
   console.log("All data from app", myData);
   if (isLoading) {
@@ -29,9 +31,12 @@ const App = () => {
   return (
     <div>
       <button onClick={() => addData({ name: "Upul Kumara" })}>Add Data</button>
-      <button onClick={() => updateData({ id: 7, body: {name:"Komarika Munasinhe"} })}>
+      <button
+        onClick={() => updateData({ id: 5, body: { name: "Kasun Munasinhe" } })}
+      >
         Update Data
       </button>
+      <button onClick={() => deleteDataById(5)}>Delete Data</button>
 
       <h1>Single Data</h1>
       {isSuccess &&
@@ -45,11 +50,8 @@ const App = () => {
 export default App;
 
 const SingleDataComponent = ({ id, name }) => {
-  const { data: myDataById,isSuccess:myDataByIdSuccess } = useGetDataByIdQuery(id);
+  const { data: myDataById, isSuccess: myDataByIdSuccess } =
+    useGetDataByIdQuery(id);
   console.log("Single data from app", myDataById);
-  return (
-    <div>
-      {myDataByIdSuccess && `${id} - ${myDataById.name}`}
-    </div>
-  );
+  return <div>{myDataByIdSuccess && `${id} - ${myDataById.name}`}</div>;
 };

@@ -25,15 +25,20 @@ export const dataApi = createApi({
         return [{ type: "Data", id: arg }];
       },
     }),
-    postData: builder.mutation({
-      query: (newData) => ({
-        url: "data",
+    addData: builder.mutation({
+      query: (body) => ({
+        url: "/",
         method: "POST",
-        body: newData,
+        body,
       }),
+      invalidatesTags: (result, err, arg) => {
+        console.log("Add data mutation invalid tags", { result, err, arg });
+        return [{ type: "Data", id: "LIST" }];
+      },
     }),
   }),
 });
 
-export const { useGetAllDataQuery, useGetDataByIdQuery } = dataApi;
+export const { useGetAllDataQuery, useGetDataByIdQuery, useAddDataMutation } =
+  dataApi;
 export default dataApi;

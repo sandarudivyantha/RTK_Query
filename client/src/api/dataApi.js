@@ -27,7 +27,7 @@ export const dataApi = createApi({
         method: "get",
       }),
       providesTags: (result, err, arg) => {
-        console.log("Get data by id tag", { arg });
+        console.log("Get data by id tag", result);
         return [{ type: "Data", id: arg }];
       },
     }),
@@ -42,9 +42,20 @@ export const dataApi = createApi({
         return [{ type: "Data", id: "LIST" }];
       },
     }),
+    updateDataById: builder.mutation({
+      query: (data) => ({
+        url: `/${data.id}`,
+        method: "PUT",
+        body: data.body,
+      }),
+      invalidatesTags: (result, err, arg) => {
+        console.log("Update data by id invalid tags", { result, err, arg });
+        return [{ type: "Data",  id: arg.id }, { type: "Data", id: "LIST" }];
+      },
+    }),
   }),
 });
 
-export const { useGetAllDataQuery, useGetDataByIdQuery, useAddDataMutation } =
+export const { useGetAllDataQuery, useGetDataByIdQuery, useAddDataMutation, useUpdateDataByIdMutation } =
   dataApi;
 export default dataApi;

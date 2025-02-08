@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
 import {
   useAddDataMutation,
   useGetAllDataQuery,
   useGetDataByIdQuery,
+  useUpdateDataByIdMutation,
 } from "./api/dataApi";
 
 const App = () => {
@@ -15,8 +16,9 @@ const App = () => {
   } = useGetAllDataQuery();
 
   const [addData] = useAddDataMutation();
-  console.log("All data from app", myData);
+  const [updateData] = useUpdateDataByIdMutation();
 
+  console.log("All data from app", myData);
   if (isLoading) {
     return <h2>Loading...</h2>;
   }
@@ -27,18 +29,27 @@ const App = () => {
   return (
     <div>
       <button onClick={() => addData({ name: "Upul Kumara" })}>Add Data</button>
+      <button onClick={() => updateData({ id: 7, body: {name:"Komarika Munasinhe"} })}>
+        Update Data
+      </button>
 
       <h1>Single Data</h1>
       {isSuccess &&
-        myData.map((ele) => <SingleDataComponent key={ele.id} id={ele.id} />)}
+        myData.map((ele) => (
+          <SingleDataComponent name={ele.name} key={ele.id} id={ele.id} />
+        ))}
     </div>
   );
 };
 
 export default App;
 
-const SingleDataComponent = ({ id }) => {
-  const { data: myDataById } = useGetDataByIdQuery(id);
+const SingleDataComponent = ({ id, name }) => {
+  const { data: myDataById,isSuccess:myDataByIdSuccess } = useGetDataByIdQuery(id);
   console.log("Single data from app", myDataById);
-  return <div>{id}</div>;
+  return (
+    <div>
+      {myDataByIdSuccess && `${id} - ${myDataById.name}`}
+    </div>
+  );
 };
